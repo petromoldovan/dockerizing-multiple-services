@@ -4,21 +4,21 @@ services:
   - docker
 
 before_install:
-  - docker build -t pm/dockerizing-multiple-containers -f ./client/Dockerfile.dev ./client
+  - docker build -t petromoldovan/dockerizing-multiple-containers -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true pm/dockerizing-multiple-containers npm test
+  - docker run -e CI=true petromoldovan/dockerizing-multiple-containers npm test
 
 #build all prod images
 after_success:
-  - docker build -t pm/multi-client ./client
-  - docker build -t pm/multi-server ./server
-  - docker build -t pm/multi-nginx ./nginx
-  - docker build -t pm/multi-worker ./worker
+  - docker build -t petromoldovan/multi-client ./client
+  - docker build -t petromoldovan/multi-server ./server
+  - docker build -t petromoldovan/multi-nginx ./nginx
+  - docker build -t petromoldovan/multi-worker ./worker
   #log in to docker ci
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 #take the images and push them to docker hub
-  - docker push pm/multi-client
-  - docker push pm/multi-server
-  - docker push pm/multi-nginx
-  - docker push pm/multi-worker
+  - docker push petromoldovan/multi-client
+  - docker push petromoldovan/multi-server
+  - docker push petromoldovan/multi-nginx
+  - docker push petromoldovan/multi-worker
